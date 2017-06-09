@@ -12,11 +12,12 @@ $longopts  = array(
     "password:",
     "emailName:",
     "emailSubject:",
-    "emailHtml:",    
+    "emailHtmlFile:",    
     "emailSegments:"    
 );
 $opt = getopt('',$longopts);
 #var_dump($opt);
+#die();
 #### END of command line argument parsing ####
 
 
@@ -56,7 +57,7 @@ $emailsApi = $api->newApi('emails', $auth, $settings['baseUrl'] . '/api/');
 $data = array(
     'subject'     => trim($opt['emailSubject']),
     'name'        => trim($opt['emailName']) . ' (via script)', 
-    'customHtml'  => trim($opt['emailHtml']), 
+    'customHtml'  => file_get_contents($opt['emailHtmlFile']), 
     'lists'       => explode(',',$opt['emailSegments']),     
     'emailType'   => 'list',    
     'isPublished' => 1,
